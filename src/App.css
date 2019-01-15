@@ -70,7 +70,7 @@ h1 > .mw-headline {
   line-height: 3rem;
 }
 h2 > .mw-headline {
-  border-top: 5px solid;
+  border-top: 1px dashed;
   padding-top: 20px;
   padding-right: 40px;
   font-size: 1.8rem;
