@@ -16,7 +16,7 @@ body,
 }
 
 .App {
-  max-width: 700px;
+  max-width: 650px;
   width: calc(100% - 60px);
   overflow-wrap: break-word;
   margin: 0 auto;

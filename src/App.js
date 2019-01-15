@@ -17,8 +17,9 @@ class App extends Component {
 
     const sujet = (this.subject && this.subject.value) || subject;
     fetch(
-      // 'https://fr.wikipedia.org/w/api.php?action=parse&list=random&rnlimit=5',
-      `https://fr.wikipedia.org/w/api.php?action=parse&page=${sujet}&format=json&origin=*`,
+      // 'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=5&format=json&origin=*',
+      // `https://fr.wikipedia.org/w/api.php?action=parse&page=${sujet}&format=json&origin=*`,
+      `https://en.wikipedia.org/w/api.php?action=parse&page=Agriculture_in_Saudi_Arabia&format=json&origin=*`,
       {
         mode: 'cors',
         header: myHeaders
