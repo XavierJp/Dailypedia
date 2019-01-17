@@ -25,25 +25,26 @@ body,
 a {
   color: #0f3252;
   text-decoration: none;
-  border-bottom: 1px solid #abbac7;
+  border-bottom: 1px dashed #abbac7;
   transition: border 150ms ease-in-out;
 }
 a:hover {
-  border-bottom: 1px solid #0f3252;
+  color: #242c3b;
+  border-bottom: 1px dashed #0f3252;
   text-decoration: none;
 }
 
 h1 {
   border-top: 10px double;
-  padding-top: 30px;
   padding-right: 30px;
+  padding-top: 15px;
   font-size: 2.3rem;
   line-height: 3rem;
   margin: 40px 0;
 }
 
 h2 {
-  margin: 100px 0 20px;
+  margin: 100px 0 40px;
 }
 h1 > .mw-headline,
 h2 > .mw-headline,
@@ -63,15 +64,16 @@ h4 {
 }
 
 h1 > .mw-headline {
+  width: 100%;
   border-top: 10px double;
-  padding-top: 20px;
+  padding-top: 25px;
   padding-right: 30px;
   font-size: 2.3rem;
   line-height: 3rem;
 }
 h2 > .mw-headline {
-  border-top: 1px dashed;
-  padding-top: 20px;
+  border-top: 2px solid;
+  padding-top: 12px;
   padding-right: 40px;
   font-size: 1.8rem;
   line-height: 2.4rem;
