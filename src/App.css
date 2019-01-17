@@ -6,7 +6,8 @@ body,
   font-size: 18px;
   line-height: 1.8;
   color: #0f3252;
-  background: #f4fcff;
+  background: #fff;
+  counter-reset: section;
 }
 
 .thumbcaption {
@@ -16,10 +17,17 @@ body,
 }
 
 .App {
-  max-width: 650px;
+  max-width: 600px;
   width: calc(100% - 60px);
   overflow-wrap: break-word;
   margin: 0 auto;
+}
+
+::selection {
+  background: #fff2a8;
+}
+::-moz-selection {
+  background: #fff2a8;
 }
 
 a {
@@ -29,7 +37,7 @@ a {
   transition: border 150ms ease-in-out;
 }
 a:hover {
-  color: #242c3b;
+  color: #0f3252;
   border-bottom: 1px dashed #0f3252;
   text-decoration: none;
 }
@@ -45,14 +53,25 @@ h1 {
 
 h2 {
   margin: 100px 0 40px;
+  position: relative;
 }
+
+h2:before {
+  counter-increment: section;
+  content: counter(section);
+  position: absolute;
+  left: -45px;
+  top: -20px;
+  font-size: 75px;
+}
+
 h1 > .mw-headline,
 h2 > .mw-headline,
 h3 > .mw-headline,
 h4 > .mw-headline {
-  font-family: 'OPen sans', sans-serif;
-  color: #4d6488;
-  font-weight: 100;
+  font-family: 'Ubuntu', 'Open sans', sans-serif;
+  color: #ce3c00;
+  font-weight: 900;
   display: inline-block;
   border-color: #242c3b;
 }
@@ -72,12 +91,13 @@ h1 > .mw-headline {
   line-height: 3rem;
 }
 h2 > .mw-headline {
-  border-top: 2px solid;
+  /* border-top: 2px solid; */
   padding-top: 12px;
   padding-right: 40px;
   font-size: 1.8rem;
   line-height: 2.4rem;
 }
+
 h3 > .mw-headline {
   font-size: 1.4rem;
   line-height: 2rem;
