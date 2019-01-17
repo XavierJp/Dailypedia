@@ -1,13 +1,13 @@
 {
-  "main.css": "/Dailypedia/static/css/main.dfd25e33.chunk.css",
-  "main.js": "/Dailypedia/static/js/main.cb5bf60d.chunk.js",
-  "main.js.map": "/Dailypedia/static/js/main.cb5bf60d.chunk.js.map",
+  "main.css": "/Dailypedia/static/css/main.29fd1e32.chunk.css",
+  "main.js": "/Dailypedia/static/js/main.69903b3a.chunk.js",
+  "main.js.map": "/Dailypedia/static/js/main.69903b3a.chunk.js.map",
   "static/js/1.324b6cf3.chunk.js": "/Dailypedia/static/js/1.324b6cf3.chunk.js",
   "static/js/1.324b6cf3.chunk.js.map": "/Dailypedia/static/js/1.324b6cf3.chunk.js.map",
   "runtime~main.js": "/Dailypedia/static/js/runtime~main.4841b1af.js",
   "runtime~main.js.map": "/Dailypedia/static/js/runtime~main.4841b1af.js.map",
-  "static/css/main.dfd25e33.chunk.css.map": "/Dailypedia/static/css/main.dfd25e33.chunk.css.map",
+  "static/css/main.29fd1e32.chunk.css.map": "/Dailypedia/static/css/main.29fd1e32.chunk.css.map",
   "index.html": "/Dailypedia/index.html",
-  "precache-manifest.67ce40e95ad74cc4e276415821ddde5c.js": "/Dailypedia/precache-manifest.67ce40e95ad74cc4e276415821ddde5c.js",
+  "precache-manifest.24914c94377129ce96680289d01fc35f.js": "/Dailypedia/precache-manifest.24914c94377129ce96680289d01fc35f.js",
   "service-worker.js": "/Dailypedia/service-worker.js"
 }
