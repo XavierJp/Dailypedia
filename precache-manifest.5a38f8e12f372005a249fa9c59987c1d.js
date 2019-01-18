@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/Dailypedia/static/js/runtime~main.4841b1af.js"
   },
   {
-    "revision": "dbd2d48a646f1667fa30",
-    "url": "/Dailypedia/static/js/main.dbd2d48a.chunk.js"
+    "revision": "6b0ebd90dcdd85f79f53",
+    "url": "/Dailypedia/static/js/main.6b0ebd90.chunk.js"
   },
   {
     "revision": "769e228087a92a571f8d",
     "url": "/Dailypedia/static/js/1.769e2280.chunk.js"
   },
   {
-    "revision": "dbd2d48a646f1667fa30",
-    "url": "/Dailypedia/static/css/main.1847c2aa.chunk.css"
+    "revision": "6b0ebd90dcdd85f79f53",
+    "url": "/Dailypedia/static/css/main.b5a1842d.chunk.css"
   },
   {
-    "revision": "f01efb98112a99fd6f4d95dd32ad0317",
+    "revision": "fc4f8119ac2c400233ff884302f2b96d",
     "url": "/Dailypedia/index.html"
   }
 ];
