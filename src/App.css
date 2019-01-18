@@ -30,6 +30,16 @@ body,
   background: #fff2a8;
 }
 
+.search {
+  display: flex;
+}
+.search > input[type='text'] {
+  flex-grow: 1;
+}
+
+.search > input[type='submit'] {
+  flex-grow: 0;
+}
 input[type='text'],
 input[type='text']:focus {
   border: 2px solid #dedde7;
@@ -39,13 +49,12 @@ input[type='text']:focus {
   background-color: #fff;
   margin: 10px 0;
   padding: 8px 15px;
-  width: 70%;
   box-shadow: none;
   outline: none;
 }
 
 input[type='text']:focus {
-  color: #43365b;
+  border-color: #00b991;
 }
 
 input[type='text']::placeholder {
@@ -62,9 +71,16 @@ button[type='submit'] {
   font-size: 1.2rem;
   margin: 10px 10px;
   padding: 8px 15px;
-  width: 20%;
   box-shadow: none;
   outline: none;
+  cursor: pointer;
+}
+button[type='submit']:hover {
+}
+
+.random {
+  display: flex;
+  justify-content: center;
 }
 
 .progress-bar {

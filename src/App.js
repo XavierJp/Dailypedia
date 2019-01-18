@@ -7,9 +7,11 @@ class App extends Component {
 
     this.state = {
       loading: true,
-      pathName: window.location.pathname.replace('/wiki/', '') || ''
+      pathName:
+        window.location.pathname.replace('/wiki/', '') ||
+        'Agriculture_in_Saudi_Arabia'
     };
-    this.fetchWikiData();
+    this.getRandomUrl();
   }
 
   componentDidMount() {
@@ -27,16 +29,38 @@ class App extends Component {
     });
   }
 
-  fetchWikiData = (subject = 'Fonction_à_sens_unique') => {
+  getRandomUrl = async () => {
     const myHeaders = new Headers();
     myHeaders.append('Origin', '*');
 
-    const sujet =
-      this.state.pathName || (this.subject && this.subject.value) || subject;
     fetch(
-      // 'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=5&format=json&origin=*',
-      `https://fr.wikipedia.org/w/api.php?action=parse&page=${sujet}&format=json&origin=*`,
-      // `https://en.wikipedia.org/w/api.php?action=parse&page=Agriculture_in_Saudi_Arabia&format=json&origin=*`,
+      'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&format=json&origin=*',
+      {
+        mode: 'cors',
+        header: myHeaders
+      }
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(body => {
+        const url = `https://fr.wikipedia.org/w/api.php?action=parse&pageid=${
+          body.query.random[0].id
+        }&format=json&origin=*`;
+        this.fetchWikiData(url);
+      })
+      .catch(error => console.error(error));
+  };
+
+  fetchWikiData = (url = '') => {
+    const myHeaders = new Headers();
+    myHeaders.append('Origin', '*');
+
+    const sujet = this.state.pathName || (this.subject && this.subject.value);
+
+    fetch(
+      url ||
+        `https://fr.wikipedia.org/w/api.php?action=parse&page=${sujet}&format=json&origin=*`,
       {
         mode: 'cors',
         header: myHeaders
@@ -55,19 +79,26 @@ class App extends Component {
     const { body } = this.state;
     return (
       <div className="App">
-        {body && (
+        <div className="progress-bar">
+          <div ref={el => (this.progressBar = el)} />
+        </div>
+        <div className="search">
+          <input
+            type="text"
+            ref={el => (this.subject = el)}
+            placeholder="Rechercher un article"
+          />
+          <button type="submit" onClick={this.fetchWikiData}>
+            Go
+          </button>
+        </div>
+        <div className="random">
+          <button type="submit" onClick={this.getRandomUrl}>
+            Random
+          </button>
+        </div>
+        {body && body.parse && (
           <>
-            <div className="progress-bar">
-              <div ref={el => (this.progressBar = el)} />
-            </div>
-            <input
-              type="text"
-              ref={el => (this.subject = el)}
-              placeholder="Rechercher un article"
-            />
-            <button type="submit" onClick={this.fetchWikiData}>
-              Go
-            </button>
             <h1>{body.parse.title}</h1>
             <div
               dangerouslySetInnerHTML={{
