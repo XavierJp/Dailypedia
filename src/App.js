@@ -41,7 +41,7 @@ class App extends Component {
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
-      this.progressBar.style.width = Math.round(scrolled) + '%';
+      this.progressBar.style.width = Math.round(scrolled * 100) / 100 + '%';
     });
   }
 
@@ -86,7 +86,9 @@ class App extends Component {
         return response.json();
       })
       .then(body => {
-        this.setState({ body, loading: false });
+        this.setState({ body, loading: false }, () => {
+          document.documentElement.scrollTop = 0;
+        });
       })
       .catch(error => console.error(error));
   };
@@ -98,7 +100,7 @@ class App extends Component {
         <div className="progress-bar">
           <div ref={el => (this.progressBar = el)} />
         </div>
-        <div className="search">
+        {/* <div className="search">
           <input
             type="text"
             ref={el => (this.subject = el)}
@@ -107,7 +109,7 @@ class App extends Component {
           <button type="submit" onClick={this.fetchWikiData}>
             Go
           </button>
-        </div>
+        </div> */}
         <div className="random">
           <button type="submit" onClick={this.getRandomUrl}>
             {zap} Article aléatoire
