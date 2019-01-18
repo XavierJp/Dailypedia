@@ -34,7 +34,7 @@ class App extends Component {
     myHeaders.append('Origin', '*');
 
     fetch(
-      'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&format=json&origin=*',
+      'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&rnnamespace=0&format=json&origin=*',
       {
         mode: 'cors',
         header: myHeaders
