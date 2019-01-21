@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Dailypedia/precache-manifest.a109dad48ee4e90ffd8bf50ff33c4403.js"
+  "/Dailypedia/precache-manifest.5ba7fd0549bc7c1effa5810cf6c1fe0a.js"
 );
 
 workbox.clientsClaim();
