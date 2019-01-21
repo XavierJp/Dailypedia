@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
+import './App.scss';
 
 const zap = (
   <svg
@@ -21,8 +21,19 @@ const RANDOM_URL =
   'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&rnnamespace=0&format=json&origin=*';
 const ARTICLE_BY_ID = `https://fr.wikipedia.org/w/api.php?action=parse&pageid=§§§&format=json&origin=*`;
 const ARTICLE_BY_TITLE = `https://fr.wikipedia.org/w/api.php?action=parse&page=§§§&format=json&origin=*`;
-class App extends Component {
-  constructor(props) {
+
+export interface IProps {}
+export interface IState {
+  pathName: string | null;
+  loading: boolean;
+  body: any | null;
+}
+
+export default class App extends React.PureComponent<IProps, IState> {
+  private progressBar!: HTMLElement | null;
+  private randomBtn!: HTMLButtonElement | null;
+
+  public constructor(props: IProps) {
     super(props);
 
     const p =
@@ -30,8 +41,9 @@ class App extends Component {
         ? window.location.pathname.split('/wiki/')
         : [];
     this.state = {
+      body: null,
       loading: true,
-      pathName: p[p.length - 1] || null
+      pathName: p[p.length - 1] || null,
     };
     if (!this.state.pathName) {
       this.getRandomUrl();
@@ -40,7 +52,7 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     document.addEventListener('scroll', () => {
       if (!this.progressBar) {
         return;
@@ -55,28 +67,28 @@ class App extends Component {
     });
   }
 
-  fetchData = async url => {
+  private fetchData = async (url: string) => {
     const myHeaders = new Headers();
     myHeaders.append('Origin', '*');
 
     const response = await fetch(url, {
       mode: 'cors',
-      header: myHeaders
+      headers: myHeaders,
     });
 
     return response.json();
   };
 
-  getRandomUrl = async () => {
+  private getRandomUrl = async () => {
     try {
-      if (this.randomBttn) {
-        this.randomBttn.classList.add('loading');
+      if (this.randomBtn) {
+        this.randomBtn.classList.add('loading');
       }
       const dataRandom = await this.fetchData(RANDOM_URL);
 
       const urlById = ARTICLE_BY_ID.replace(
         '§§§',
-        dataRandom.query.random[0].id
+        dataRandom.query.random[0].id,
       );
 
       const data = await this.fetchData(urlById);
@@ -84,8 +96,8 @@ class App extends Component {
       this.setState({ body: data, loading: false }, () => {
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        if (this.randomBttn) {
-          this.randomBttn.classList.remove('loading');
+        if (this.randomBtn) {
+          this.randomBtn.classList.remove('loading');
         }
       });
     } catch (e) {
@@ -93,26 +105,30 @@ class App extends Component {
     }
   };
 
-  fetchWikiData = async (url = '') => {
-    if (this.randomBttn) {
-      this.randomBttn.classList.add('loading');
+  private fetchWikiData = async (url = '') => {
+    if (this.randomBtn) {
+      this.randomBtn.classList.add('loading');
     }
-    const sujet = this.state.pathName || (this.subject && this.subject.value);
+    const sujet = this.state.pathName;
+
+    if (!url && !sujet) {
+      console.error('Should not happen');
+    }
 
     const data = await this.fetchData(
-      url || ARTICLE_BY_TITLE.replace('§§§', sujet)
+      url || ARTICLE_BY_TITLE.replace('§§§', sujet || ''),
     );
 
     this.setState({ body: data, loading: false }, () => {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-      if (this.randomBttn) {
-        this.randomBttn.classList.remove('loading');
+      if (this.randomBtn) {
+        this.randomBtn.classList.remove('loading');
       }
     });
   };
 
-  render() {
+  public render() {
     const { body } = this.state;
     return (
       <div className="App">
@@ -133,7 +149,7 @@ class App extends Component {
           <button
             type="submit"
             onClick={this.getRandomUrl}
-            ref={el => (this.randomBttn = el)}
+            ref={el => (this.randomBtn = el)}
           >
             <div className="donut" />
             <div className="content">{zap}</div>
@@ -144,7 +160,7 @@ class App extends Component {
             <h1>{body.parse.title}</h1>
             <div
               dangerouslySetInnerHTML={{
-                __html: body.parse.text['*']
+                __html: body.parse.text['*'],
               }}
             />
           </>
@@ -153,5 +169,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
