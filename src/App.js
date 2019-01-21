@@ -12,22 +12,29 @@ const zap = (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    class="feather feather-zap"
   >
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
   </svg>
 );
+
+const RANDOM_URL =
+  'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&rnnamespace=0&format=json&origin=*';
+const ARTICLE_BY_ID = `https://fr.wikipedia.org/w/api.php?action=parse&pageid=§§§&format=json&origin=*`;
+const ARTICLME_BY_TITLE = `https://fr.wikipedia.org/w/api.php?action=parse&page=§§§&format=json&origin=*`;
 class App extends Component {
   constructor(props) {
     super(props);
 
+    const p = window.location.pathname.split('/wiki/');
     this.state = {
       loading: true,
-      pathName:
-        window.location.pathname.replace('/wiki/', '') ||
-        'Agriculture_in_Saudi_Arabia'
+      pathName: p[p.length - 1] || null
     };
-    this.getRandomUrl();
+    if (!this.state.pathName) {
+      this.getRandomUrl();
+    } else {
+      this.fetchWikiData();
+    }
   }
 
   componentDidMount() {
@@ -45,56 +52,67 @@ class App extends Component {
     });
   }
 
-  getRandomUrl = async () => {
+  fetchData = async url => {
     const myHeaders = new Headers();
     myHeaders.append('Origin', '*');
 
-    fetch(
-      'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&rnnamespace=0&format=json&origin=*',
-      {
-        mode: 'cors',
-        header: myHeaders
-      }
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(body => {
-        const url = `https://fr.wikipedia.org/w/api.php?action=parse&pageid=${
-          body.query.random[0].id
-        }&format=json&origin=*`;
-        this.fetchWikiData(url);
-      })
-      .catch(error => console.error(error));
+    const response = await fetch(url, {
+      mode: 'cors',
+      header: myHeaders
+    });
+
+    return response.json();
   };
 
-  fetchWikiData = (url = '') => {
-    const myHeaders = new Headers();
-    myHeaders.append('Origin', '*');
+  getRandomUrl = async () => {
+    try {
+      if (this.randomBttn) {
+        this.randomBttn.classList.add('loading');
+      }
+      const dataRandom = await this.fetchData(RANDOM_URL);
 
+      const urlById = ARTICLE_BY_ID.replace(
+        '§§§',
+        dataRandom.query.random[0].id
+      );
+      console.log(dataRandom);
+
+      const data = await this.fetchData(urlById);
+
+      this.setState({ body: data, loading: false }, () => {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        if (this.randomBttn) {
+          this.randomBttn.classList.remove('loading');
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  fetchWikiData = async (url = '') => {
+    if (this.randomBttn) {
+      this.randomBttn.classList.add('loading');
+    }
     const sujet = this.state.pathName || (this.subject && this.subject.value);
 
-    fetch(
-      url ||
-        `https://fr.wikipedia.org/w/api.php?action=parse&page=${sujet}&format=json&origin=*`,
-      {
-        mode: 'cors',
-        header: myHeaders
+    const data = await this.fetchData(
+      url || ARTICLME_BY_TITLE.replace('§§§', sujet)
+    );
+
+    this.setState({ body: data, loading: false }, () => {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      if (this.randomBttn) {
+        this.randomBttn.classList.remove('loading');
       }
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(body => {
-        this.setState({ body, loading: false }, () => {
-          document.documentElement.scrollTop = 0;
-        });
-      })
-      .catch(error => console.error(error));
+    });
   };
 
   render() {
     const { body } = this.state;
+    console.log(body);
     return (
       <div className="App">
         <div className="progress-bar">
@@ -111,8 +129,13 @@ class App extends Component {
           </button>
         </div> */}
         <div className="random">
-          <button type="submit" onClick={this.getRandomUrl}>
-            {zap} Article aléatoire
+          <button
+            type="submit"
+            onClick={this.getRandomUrl}
+            ref={el => (this.randomBttn = el)}
+          >
+            <div className="donut" />
+            <div className="content">{zap}</div>
           </button>
         </div>
         {body && body.parse && (

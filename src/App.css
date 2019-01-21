@@ -71,12 +71,59 @@ button[type='submit'] {
   border-radius: 7px;
   font-size: 1.2rem;
   margin: 10px 10px;
-  padding: 8px 15px;
+  padding: 8px 12px;
   box-shadow: none;
   outline: none;
   cursor: pointer;
 }
 button[type='submit']:hover {
+}
+button[type='submit'] > .donut {
+  display: none;
+}
+button[type='submit'] > .content {
+  display: initial;
+  display: flex;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 600;
+  /* height: 50px;
+  width: 50px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 150ms ease-in-out;
+}
+
+button[type='submit'] > .content > svg {
+  fill: #fff;
+  stroke: none !important;
+  transform: rotate(5deg);
+}
+
+button[type='submit'].loading > .donut {
+  display: inline-block;
+  animation: donut-spin 0.5s linear infinite;
+}
+button[type='submit'].loading > .content {
+  display: none;
+}
+@keyframes donut-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.donut {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #a5f5e3;
+  border-radius: 50%;
+  animation: donut-spin 0.4s linear infinite;
 }
 
 .random {
@@ -85,25 +132,11 @@ button[type='submit']:hover {
   right: 15px;
   user-select: none;
 }
+
 .random > button[type='submit'] {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 600;
   border-radius: 100px;
-  /* height: 50px;
-  width: 50px; */
+  height: 50px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 150ms ease-in-out;
-}
-.random > button[type='submit'] > svg {
-  margin-right: 5px;
-  fill: #fff;
-  stroke: none !important;
-  transform: rotate(5deg);
-}
-button[type='submit']:hover {
-  transform: translateY(-5px);
 }
 
 .progress-bar {
@@ -178,7 +211,7 @@ h1 > .mw-headline {
   border-top: 10px double;
   padding-top: 25px;
   padding-right: 30px;
-  font-size: 2.3rem;
+  font-size: 2rem;
   line-height: 3rem;
 }
 h2 > .mw-headline {
@@ -261,7 +294,9 @@ pre {
 .thumb,
 .homonymie,
 .reference,
-.bandeau-section {
+.bandeau-section,
+.infobox_v3,
+.infobox_v2 {
   display: none;
 }
 
