@@ -20,12 +20,15 @@ const zap = (
 const RANDOM_URL =
   'https://fr.wikipedia.org/w/api.php?action=query&list=random&rnlimit=1&rnnamespace=0&format=json&origin=*';
 const ARTICLE_BY_ID = `https://fr.wikipedia.org/w/api.php?action=parse&pageid=§§§&format=json&origin=*`;
-const ARTICLME_BY_TITLE = `https://fr.wikipedia.org/w/api.php?action=parse&page=§§§&format=json&origin=*`;
+const ARTICLE_BY_TITLE = `https://fr.wikipedia.org/w/api.php?action=parse&page=§§§&format=json&origin=*`;
 class App extends Component {
   constructor(props) {
     super(props);
 
-    const p = window.location.pathname.split('/wiki/');
+    const p =
+      window.location.pathname.indexOf('wiki') >= 0
+        ? window.location.pathname.split('/wiki/')
+        : [];
     this.state = {
       loading: true,
       pathName: p[p.length - 1] || null
@@ -75,7 +78,6 @@ class App extends Component {
         '§§§',
         dataRandom.query.random[0].id
       );
-      console.log(dataRandom);
 
       const data = await this.fetchData(urlById);
 
@@ -98,7 +100,7 @@ class App extends Component {
     const sujet = this.state.pathName || (this.subject && this.subject.value);
 
     const data = await this.fetchData(
-      url || ARTICLME_BY_TITLE.replace('§§§', sujet)
+      url || ARTICLE_BY_TITLE.replace('§§§', sujet)
     );
 
     this.setState({ body: data, loading: false }, () => {
@@ -112,7 +114,6 @@ class App extends Component {
 
   render() {
     const { body } = this.state;
-    console.log(body);
     return (
       <div className="App">
         <div className="progress-bar">
